@@ -1,7 +1,13 @@
-# EyeQC research package — October 2026
+# EyeQC research website release
 
-**Verified here:** Original ten-feature extraction runs on the included samples; real image-derived six-by-six quality maps render; nine controlled transformations and five-dose feature curves run; invalid image handling works; frozen 778D head loads; unit/API tests pass.
+A new GitHub Pages edition for transparent exploration of the supplied EyeQC results.
 
-**Not verified:** Published DINOv2 preprocessing parity, complete main-model end-to-end predictions from a new image, optional FLAIR and RRWNet weight downloads, image redistribution permissions, Docker build on a production host, browser screenshots (restricted browser environment), clinical use, or prospective effectiveness.
+- Replaced the server-dependent first page with a responsive, static research website.
+- Added authentic image-level local-readability maps calculated from the supplied photographs using the original Python extractor.
+- Added nine simulated acquisition defects at five doses, each with recomputed interpretable measurements and downloadable dose tables.
+- Added the five-cohort study overview and an eight-method AUROC/AUPRC/Brier comparison derived from the supplied result CSV files.
+- Added offline photograph preview, explicitly not the validated EyeQC risk model.
+- Added an optional endpoint connector for the Python ten-feature extractor, vessel module and FLAIR comparator.
+- Added GitHub Pages deployment workflow and branch-based deployment instructions.
 
-**Deployment:** This is a local artifact. The connected GitHub repository was not available for authenticated writes in the current session, and the Hugging Face integration only exposed read/detail operations. No live site was changed.
+Remaining step before full model inference: recover and verify the original frozen DINOv2 preprocessing implementation against archived embeddings and scores.

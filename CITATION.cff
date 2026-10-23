@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use EyeQC in research, please cite the associated manuscript once available and reference the repository version."
+title: "EyeQC: A high-throughput quality control framework for multi-institutional and multi-reader standardization of retinal fundus imaging"
+authors:
+  - family-names: Raghavan
+    given-names: Dharini
+keywords:
+  - retina
+  - fundus photography
+  - image quality control
+  - interpretable measurements
+  - digital medicine

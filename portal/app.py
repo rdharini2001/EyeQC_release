@@ -12,6 +12,7 @@ from PIL import Image
 from fastapi import FastAPI,UploadFile,File,Form,HTTPException
 from fastapi.responses import FileResponse,HTMLResponse,Response
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from eyeqc.core import FEATURES,DISPLAY_NAMES,ACTION_RULES,extract_features,scope_check
 from eyeqc.experiments import apply_degradation,DEGRADATIONS
 from portal.spatial import make_layers
@@ -19,7 +20,10 @@ from eyeqc_runtime import EyeQCValidatedHead,DINOv2Encoder
 
 ROOT=Path(__file__).resolve().parents[1]
 app=FastAPI(title='EyeQC research workspace',version='1.0',description='Research-use retinal image quality analysis')
+allowed_origins=[v.strip() for v in os.environ.get('EYEQC_CORS_ORIGINS','https://rdharini2001.github.io,http://localhost:8000,http://127.0.0.1:8000,http://127.0.0.1:8765').split(',') if v.strip()]
+app.add_middleware(CORSMiddleware,allow_origins=allowed_origins,allow_credentials=False,allow_methods=['GET','POST'],allow_headers=['*'])
 app.mount('/static',StaticFiles(directory=ROOT/'portal'/'static'),name='static')
+app.mount('/assets',StaticFiles(directory=ROOT/'docs'/'assets'),name='site-assets')
 _HEAD=EyeQCValidatedHead()
 _ENCODER=None
 _MAX_FILE=15*1024*1024
@@ -64,7 +68,7 @@ def analyze(rgb):
     return out
 
 @app.get('/')
-def home():return FileResponse(ROOT/'portal'/'index.html')
+def home():return FileResponse(ROOT/'docs'/'index.html')
 
 @app.get('/health')
 def health():return {'ok':True,'model_version':_HEAD.contract['version'],'trained_risk_enabled':os.getenv('EYEQC_ENABLE_CANDIDATE_INFERENCE','0')=='1'}
