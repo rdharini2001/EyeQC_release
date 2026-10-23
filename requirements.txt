@@ -1,0 +1,15 @@
+fastapi>=0.110,<1
+uvicorn>=0.27,<1
+python-multipart>=0.0.9
+numpy>=1.26,<3
+pandas>=2.2,<3
+scipy>=1.12,<2
+scikit-learn>=1.5,<2
+opencv-python-headless>=4.10,<5
+matplotlib>=3.8,<4
+pillow>=10,<13
+httpx>=0.27,<1
+# Model inference is optional until preprocessing parity has been established
+# pip install torch torchvision
+# Extra, optional services:
+# pip install huggingface_hub scikit-image transformers safetensors kornia

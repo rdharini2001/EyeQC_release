@@ -1,0 +1,11 @@
+cohort,image_path,hand_features_bit_identical,hand_features_max_abs_diff,dinov2_embedding_bit_identical,dinov2_embedding_max_abs_diff,dinov2_embedding_max_rel_diff,risk_bad_v3_run1,risk_bad_v3_run2,risk_bad_v3_abs_diff,verdict_run1,verdict_run2,verdict_changed
+EyeQ-test,F:\EyeQC\EyeQC_npj\EyePACS\test\1_right.jpeg,True,0.0,True,0.0,0.0,0.06360717556069018,0.06360717556069018,0.0,PASS,PASS,False
+EyeQ-test,F:\EyeQC\EyeQC_npj\EyePACS\test\10001_right.jpeg,True,0.0,True,0.0,0.0,0.002116505174154299,0.002116505174154299,0.0,PASS,PASS,False
+DRIMDB,F:\EyeQC\EyeQC_npj\DRIMDB\DRIMDB\Good\drimdb_good (1).jpg,True,0.0,True,0.0,0.0,0.032783491969387124,0.032783491969387124,0.0,PASS,PASS,False
+DRIMDB,F:\EyeQC\EyeQC_npj\DRIMDB\DRIMDB\Good\drimdb_good (10).jpg,True,0.0,True,0.0,0.0,0.05502076335870955,0.05502076335870955,0.0,PASS,PASS,False
+FQS,F:\EyeQC\EyeQC_npj\FIQSDataset\images\00000.PNG,True,0.0,True,0.0,0.0,0.6595450981908575,0.6595450981908575,0.0,FAIL,FAIL,False
+FQS,F:\EyeQC\EyeQC_npj\FIQSDataset\images\00001.PNG,True,0.0,True,0.0,0.0,0.9251465216099001,0.9251465216099001,0.0,FAIL,FAIL,False
+MSHF-CFP,F:\EyeQC\EyeQC_npj\MSHF\Original\CFP\Glaucoma\Glaucoma-1.jpg,True,0.0,True,0.0,0.0,0.9097552841641644,0.9097552841641644,0.0,FAIL,FAIL,False
+MSHF-CFP,F:\EyeQC\EyeQC_npj\MSHF\Original\CFP\Glaucoma\Glaucoma-2.jpg,True,0.0,True,0.0,0.0,0.9993249579779763,0.9993249579779763,0.0,FAIL,FAIL,False
+DeepDRiD,F:\EyeQC\EyeQC_npj\DeepDRiD\DeepDRiD-master\regular_fundus_images\regular-fundus-training\Images\1\1_l1.jpg,True,0.0,True,0.0,0.0,0.8232403443802107,0.8232403443802107,0.0,FAIL,FAIL,False
+DeepDRiD,F:\EyeQC\EyeQC_npj\DeepDRiD\DeepDRiD-master\regular_fundus_images\regular-fundus-training\Images\1\1_l2.jpg,True,0.0,True,0.0,0.0,0.010481547285414006,0.010481547285414006,0.0,PASS,PASS,False

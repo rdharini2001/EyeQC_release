@@ -1,0 +1,91 @@
+{
+  "cohorts": [
+    {
+      "name": "EyeQ-test",
+      "n": 16249,
+      "auroc": 0.984,
+      "type": "Held-out source"
+    },
+    {
+      "name": "DRIMDB",
+      "n": 194,
+      "auroc": 1.0,
+      "type": "External"
+    },
+    {
+      "name": "FQS",
+      "n": 2246,
+      "auroc": 0.897,
+      "type": "External"
+    },
+    {
+      "name": "MSHF-CFP",
+      "n": 802,
+      "auroc": 0.939,
+      "type": "External"
+    },
+    {
+      "name": "DeepDRiD",
+      "n": 1600,
+      "auroc": 0.78,
+      "type": "External"
+    }
+  ],
+  "total": 21091,
+  "external": 4842,
+  "readers": 3,
+  "reader_images": 80,
+  "agreement_range": [
+    0.702,
+    0.777
+  ],
+  "latency_ms": 208,
+  "degradation_evaluations": 18000,
+  "dose_monotonic": {
+    "Darkness": 95.5,
+    "Defocus": 62.3,
+    "Shadow": 55.8,
+    "Glare": 28.0,
+    "Local blur": 25.0
+  },
+  "localization_high_dose": {
+    "Glare": 94.8,
+    "Shadow": 95.0,
+    "Local blur": 35.2
+  },
+  "within_eye": {
+    "n_pairs": 792,
+    "artefact": 83.9,
+    "clarity": 71.0,
+    "field": 78.2,
+    "exploratory_combined": 80.6
+  },
+  "notes": "Historical retrospective results; figures here are drawn from supplied analysis tables, not live recomputation.",
+  "baseline_auroc": {
+    "EyeQ-test": {
+      "EyeQC": 0.984,
+      "QuickQual": 0.987,
+      "EFIQA-CP": 0.962
+    },
+    "DRIMDB": {
+      "EyeQC": 1.0,
+      "QuickQual": 0.99,
+      "EFIQA-CP": 1.0
+    },
+    "FQS": {
+      "EyeQC": 0.897,
+      "QuickQual": 0.905,
+      "EFIQA-CP": 0.92
+    },
+    "MSHF-CFP": {
+      "EyeQC": 0.939,
+      "QuickQual": 0.949,
+      "EFIQA-CP": 0.967
+    },
+    "DeepDRiD": {
+      "EyeQC": 0.78,
+      "QuickQual": 0.755,
+      "EFIQA-CP": 0.784
+    }
+  }
+}

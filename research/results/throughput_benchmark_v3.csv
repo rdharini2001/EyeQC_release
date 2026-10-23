@@ -1,0 +1,6 @@
+metric,value
+single_latency_mean_ms,232.598423336943
+single_latency_p50_ms,237.48425001394935
+single_latency_p90_ms,295.0646399811376
+single_latency_p99_ms,321.61408303189086
+batch_images_per_sec,4.407854651667923

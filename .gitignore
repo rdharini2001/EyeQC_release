@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.parquet
+*.npy
+*.pth
+*.pt
+*.safetensors
+.DS_Store
+.pytest_cache/
+.cache/
+.DS_Store
