@@ -1,8 +1,6 @@
-# EyeQC
+<div align="center">
 
-**Retinal image quality, made visible.**
-
-EyeQC is an open research framework for assessing technical quality in color fundus photographs. The published model combines ten interpretable image-quality measurements with a frozen 768-dimensional DINOv2 visual embedding, followed by calibrated logistic regression. The research tools include locally measured quality maps, controlled acquisition degradations, and optional vessel and FLAIR analyses.
+# EyeQC: A research framework for retinal photograph quality assessment, spatial measurements and controlled acquisition experiments.**
 
 **Use the interactive tool:** [EyeQC on Hugging Face Spaces](https://huggingface.co/spaces/Dharini24/EyeQC)  
 **Research code, results, and methods:** this repository.
