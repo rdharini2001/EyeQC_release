@@ -20,7 +20,7 @@ def test_math_head_runs_independent_of_encoder():
     assert p['verdict'] in ('PASS','REVIEW','FAIL')
 
 def test_local_map_comes_from_image():
-    im=np.asarray(Image.open(ROOT/'portal/static/samples/clear.png').convert('RGB'))
+    im=np.asarray(Image.open(ROOT/'docs/assets/images/1_left.webp').convert('RGB'))
     f=extract_features(im);assert len(f['tiles'])>0
     assert all(np.isfinite(f[k]) for k in FEATURES)
 
@@ -30,14 +30,14 @@ def test_site_health_and_evidence():
     e=c.get('/api/evidence').json();assert e['total']==21091
 
 def test_upload_maps_and_degradation():
-    c=TestClient(app);blob=(ROOT/'portal/static/samples/clear.png').read_bytes()
-    r=c.post('/api/check',files={'photo':('clear.png',blob,'image/png')});assert r.status_code==200,r.text
+    c=TestClient(app);blob=(ROOT/'docs/assets/images/1_left.webp').read_bytes()
+    r=c.post('/api/check',files={'photo':('fundus.webp',blob,'image/webp')});assert r.status_code==200,r.text
     d=r.json();assert len(d['measurements'])==10
     assert d['layers']['overlay_png'].startswith('data:image/png;base64,')
     assert d['risk'] is None # default fails closed, no imaginary calibrated predictions
-    q=c.post('/api/degradation',files={'photo':('clear.png',blob,'image/png')},data={'kind':'darkness','dose':'0.6'})
+    q=c.post('/api/degradation',files={'photo':('fundus.webp',blob,'image/webp')},data={'kind':'darkness','dose':'0.6'})
     assert q.status_code==200,q.text;assert q.json()['measurements_after']
-    curve=c.post('/api/dose-curve',files={'photo':('clear.png',blob,'image/png')},data={'kind':'darkness'})
+    curve=c.post('/api/dose-curve',files={'photo':('fundus.webp',blob,'image/webp')},data={'kind':'darkness'})
     assert curve.status_code==200 and len(curve.json()['series'])==5
 
 def test_reject_invalid_image():

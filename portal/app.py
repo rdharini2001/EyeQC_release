@@ -22,7 +22,7 @@ ROOT=Path(__file__).resolve().parents[1]
 app=FastAPI(title='EyeQC research workspace',version='1.0',description='Research-use retinal image quality analysis')
 allowed_origins=[v.strip() for v in os.environ.get('EYEQC_CORS_ORIGINS','https://rdharini2001.github.io,http://localhost:8000,http://127.0.0.1:8000,http://127.0.0.1:8765').split(',') if v.strip()]
 app.add_middleware(CORSMiddleware,allow_origins=allowed_origins,allow_credentials=False,allow_methods=['GET','POST'],allow_headers=['*'])
-app.mount('/static',StaticFiles(directory=ROOT/'portal'/'static'),name='static')
+# The release serves one site. No separate legacy portal/static directory is required.
 app.mount('/assets',StaticFiles(directory=ROOT/'docs'/'assets'),name='site-assets')
 _HEAD=EyeQCValidatedHead()
 _ENCODER=None
@@ -71,10 +71,23 @@ def analyze(rgb):
 def home():return FileResponse(ROOT/'docs'/'index.html')
 
 @app.get('/health')
-def health():return {'ok':True,'model_version':_HEAD.contract['version'],'trained_risk_enabled':os.getenv('EYEQC_ENABLE_CANDIDATE_INFERENCE','0')=='1'}
+def health():
+    return {'ok':True,'model_version':_HEAD.contract['version'],
+            'trained_risk_enabled':os.getenv('EYEQC_ENABLE_CANDIDATE_INFERENCE','0')=='1',
+            'services':['measure','dose-curve','degradation','batch','vessel','flair']}
+
+@app.get('/api/capabilities')
+def capabilities():
+    import importlib.util
+    return {'measure':True,'degradation':True,'batch':True,
+        'vessel':{'source_available':True,'dependencies':bool(importlib.util.find_spec('torch') and importlib.util.find_spec('huggingface_hub')),'requires_weights':True},
+        'flair':{'source_available':True,'dependencies':bool(importlib.util.find_spec('torch') and importlib.util.find_spec('flair')),'requires_weights':True},
+        'trained_eyeqc_risk':os.getenv('EYEQC_ENABLE_CANDIDATE_INFERENCE','0')=='1',
+        'note':'Models require separate weights and are not part of the validated EyeQC classifier.'}
+
 
 @app.get('/api/evidence')
-def evidence():return json.loads((ROOT/'portal'/'static'/'evidence.json').read_text())
+def evidence():return json.loads((ROOT/'docs'/'assets'/'data'/'evidence.json').read_text())
 
 @app.post('/api/check')
 async def check(photo:UploadFile=File(...)):

@@ -1,47 +1,53 @@
-# Publish the EyeQC research website through GitHub Pages
+# Publish the EyeQC website
 
-This repository is ready for GitHub Pages. You do **not** need to run the Python backend to view the website.
+**Repository:** `rdharini2001/EyeQC_release`  
+**Expected GitHub Pages site:** https://rdharini2001.github.io/EyeQC_release/
 
-## Option A: Directly from the `/docs` folder (easiest)
+The site lives entirely in `/docs`. It contains actual retinal photographs, measured local quality maps, code-generated degradation frames and visualizations of archived results.
 
-1. Create or open the intended GitHub repository (for example `rdharini2001/EyeQC`). Make sure it is available under the account where you want to publish the site.
-2. Upload **the contents of this repository ZIP** to its root. The `docs/` directory must be at the root beside `README.md`.
-3. Commit everything to the `main` branch. In a terminal:
+## Publish with GitHub Pages
 
-   ```bash
-   git add .
-   git commit -m "Build EyeQC research website and reproducible image gallery"
-   git push origin main
-   ```
+1. Commit the contents of this release to the `main` branch of `rdharini2001/EyeQC_release`, keeping `/docs` at repository root.
+2. In **Settings → Pages**, select **Deploy from a branch → `main` → `/docs` → Save**.
+3. Alternatively, select **GitHub Actions** and let `.github/workflows/pages.yml` deploy `docs/` after every change. Choose one method, not both.
+4. Visit `https://rdharini2001.github.io/EyeQC_release/` once the deployment completes. Hard-refresh if the earlier site is cached.
 
-4. Open **Settings → Pages** on GitHub.
-5. Under **Build and deployment**, select **Deploy from a branch**. Choose `main` and `/docs`, then **Save**.
-6. The expected address for a repository named `EyeQC` under `rdharini2001` is:
-   `https://rdharini2001.github.io/EyeQC/`
-7. After the initial build, try the page in an incognito window or force-refresh if an older page is cached.
+The current GitHub repository is a distinct project from the older `EyeQC` repository and the Hugging Face Space. GitHub Pages does not update those older URLs by itself. Internal website links point to `EyeQC_release`.
 
-### Option B: GitHub Actions
+## Running the complete interface with Python models
 
-The repository also includes `.github/workflows/pages.yml`. It checks the real image/maps/data files and publishes `docs/` on pushes to `main`.
+GitHub Pages serves only HTML, JavaScript, and static files. It cannot execute Python or load Torch models. The **same website** is also served at `/` by the repository's FastAPI application:
 
-In **Settings → Pages → Build and deployment**, choose **GitHub Actions**. Commit and push, then use the **Actions** tab to see the job finish. GitHub Actions itself handles the publish; do not also select branch source.
+```bash
+pip install -r requirements.txt
+uvicorn portal.app:app --host 0.0.0.0 --port 7860
+```
 
-## What GitHub Pages can and cannot do
+The site detects a same-origin Python server automatically. A Pages deployment can talk to a separate API host without opening a different website: set `apiBase` in `docs/assets/config.json` to your HTTPS backend URL, for example `https://your-backend.example`. The image stays in the browser until the user explicitly runs a model. Add the GitHub Pages origin to `EYEQC_CORS_ORIGINS` on the API host if changing the default domain.
 
-Works directly: all sample photographs and measured maps, overlays and download buttons, nine-defect dose lab and 5-point charts, study/baseline charts, and browser-only upload preview.
+For a Docker-capable host or Hugging Face Docker Space using the core tools:
 
-Needs a Python server somewhere else: calibrated DINOv2+EyeQC scoring, true ten-feature extraction on arbitrary new uploads, and optional FLAIR and vessel pretrained networks. The packaged `portal/app.py` is available for that deployment, but trained-risk inference needs validation of the original encoder preprocessing before enabling.
+```bash
+docker build -t eyeqc .
+docker run --rm -p 7860:7860 eyeqc
+```
 
-For a local preview: `python -m http.server 8000 --directory docs`.
+The server has a light basic install. For optional vessel/FLAIR analysis, install `requirements-optional.txt`, upstream FLAIR (`pip install git+https://github.com/jusiro/FLAIR.git`), and allow its checkpoints and the RRWNet `j-morano/rrwnet-rite` checkpoint to be downloaded/cached. Confirm licenses and memory requirements first. Model loading is on demand and can have a substantial cold-start cost. If unavailable, the server returns a clear error rather than showing simulated scores.
 
-## Before making the repository public
+**The published EyeQC hybrid model is not enabled:** its original DINOv2 preprocessing module was missing from the supplied release. Recover and verify it before turning on any risk scoring. The optional candidate encoder is an experimental reconstruction, not a validated clinical score.
 
-- Confirm permission to redistribute the example photographs; replace or delete those without permission.
-- Check your own code and model licenses, especially third-party pretrained weights.
-- Add approved ethics, publication, and data use terms.
-- Do not commit original patient-level files, model-training cache or private records.
-- Check README links for your repository owner and chosen repository name.
+## Run checks before every release
 
-## If the old website is still showing
+```bash
+python scripts/check_pages.py
+python -m pytest -q tests/
+```
 
-The old Hugging Face Space is a separate service. Pushing a new repository to GitHub **does not update a Hugging Face Space**. The new GitHub Pages site will have the `github.io` address above. An existing `github.io` Pages URL may also remain old until Pages is reconfigured to point to this repo's `main/docs` or Actions artifact. The older Space can remain as a separate research backend or be replaced later.
+## Privacy and public redistribution
+
+- Do not publish photographs without the right to redistribute them; the example data provided for this manuscript are not automatically public-domain.
+- Never add patient names, identifiers or clinical reports to the example gallery.
+- Run the backend behind HTTPS when using uploads; no authentication or long-term storage is included.
+- The optional FLAIR/RRWNet outputs remain exploratory and must not be interpreted as validated EyeQC predictions.
+
+For optional pretrained modules in the same container, use `docker build -f Dockerfile.full -t eyeqc-full .` and `docker run -p 7860:7860 eyeqc-full`. This larger variant installs PyTorch, RRWNet dependencies and the upstream FLAIR package. Cold-start downloads and model licenses still apply. This optional container configuration has not been verified with the upstream model downloads in an offline build.

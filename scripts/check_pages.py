@@ -4,7 +4,7 @@ import json,re,sys
 root=Path(__file__).resolve().parents[1]
 docs=root/'docs'
 missing=[]
-for p in ['index.html','assets/site.js','assets/site.css','assets/icon.svg','assets/data/gallery.json','assets/data/doses.json','assets/data/evidence.json','assets/data/pairs.json','assets/data/baselines_full.json']:
+for p in ['index.html','assets/site.js','assets/site.css','assets/extensions.js','assets/extensions.css','assets/figures/eyeqc_spatial_atlas.webp','assets/figures/eyeqc_degradation_atlas.webp','assets/config.json','assets/icon.svg','assets/data/gallery.json','assets/data/doses.json','assets/data/evidence.json','assets/data/pairs.json','assets/data/baselines_full.json']:
  if not (docs/p).is_file():missing.append(p)
 if missing:raise SystemExit('Missing essential content: '+', '.join(missing))
 gallery=json.loads((docs/'assets/data/gallery.json').read_text())
@@ -13,6 +13,7 @@ evidence=json.loads((docs/'assets/data/evidence.json').read_text())
 for row in gallery:
  for k in ['image','map','overlay']:
   if not (docs/row[k]).is_file():missing.append(row[k])
+ if not (docs/'assets/vessels'/ (row['id']+'_contrast.webp')).is_file():missing.append(row['id']+'_contrast.webp')
  if len(row['grid'])!=6 or any(len(x)!=6 for x in row['grid']):raise SystemExit('Bad 6x6 spatial grid '+row['id'])
  if len(row['features'])!=10:raise SystemExit('Wrong feature count: '+row['id'])
 for key,degs in dose.items():

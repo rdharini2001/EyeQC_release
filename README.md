@@ -1,86 +1,111 @@
+<div align="center">
+
 # EyeQC
 
-**Retinal image quality, made visible.**
+### Retinal image quality, made visible.
 
-EyeQC is a research framework for assessing the technical quality of retinal fundus photographs. The study evaluates a 778-feature classifier (ten interpretable measurements plus a frozen 768-dimensional DINOv2 representation), a calibrated probability of poor image quality, and local quality measurements. The website makes the measurements and results easier to inspect without treating an image score as a clinical decision.
+**A research framework for retinal photograph quality assessment, spatial measurements and controlled acquisition experiments.**
 
-![EyeQC gallery, built from the supplied image set](docs/assets/images/1_left.webp)
+[Explore the research site](https://rdharini2001.github.io/EyeQC_release/) · [Read the Methods](research/MANUSCRIPT_ADDITIONS.md) · [Deployment guide](docs/DEPLOY.md) · [Model validation](MODEL_VALIDATION.md)
 
-### Open the website
+![Actual retinal photographs, six-by-six tile measurements and measured spatial maps](docs/assets/figures/eyeqc_spatial_atlas.webp)
 
-Once GitHub Pages is enabled: **https://rdharini2001.github.io/EyeQC/**
+</div>
 
-The `docs/` folder is a **self-contained website**. It does not need a Node build, a database or a Python server. It includes:
+---
 
-- A specimen explorer with eleven real user-supplied retinal photographs, original six-by-six measured readability maps, inspectable tiles, and all ten extracted feature values.
-- An acquisition-degradation laboratory with nine transformations, five severity settings and recalculated feature curves. All displayed examples were made by running `eyeqc.experiments.apply_degradation()` and `eyeqc.core.extract_features()` on the source photographs.
-- Interactive displays of the reported five-cohort validation results, baseline AUROCs, reader agreement and within-eye image quality findings.
-- Optional file upload **for a browser-only photographic preview**. The upload stays in the browser; it is *not* the validated EyeQC model and does not provide a calibrated PASS/REVIEW/FAIL score.
+## What EyeQC measures
 
-**The public website does not pretend to perform full model inference.** GitHub Pages cannot run Python/PyTorch. The distributed original code also lacks the published DINOv2 preprocessing implementation necessary to reproduce the exact trained embeddings, so the server's candidate reconstruction is off by default. See `docs/DEPLOY.md` and `MODEL_VALIDATION.md`.
+EyeQC was developed to make the technical quality of color fundus photographs easier to inspect and compare. The study combines **ten interpretable image measurements** with a frozen **768-dimensional DINOv2 ViT-B/14 embedding** in a calibrated logistic regression classifier. It also records local readability measurements that can be examined as tile grids or interpolated maps.
 
-## Project map
+The public research site shows the measurements alongside the photographs that produced them. The code includes the original extraction and degradation routines, the frozen classifier contract, analysis scripts, and two **separate optional modules** for retinal vessel structure (RRWNet) and FLAIR image-description comparisons.
 
-| Location | Contains |
-|---|---|
-| `docs/` | GitHub Pages site; authored HTML/CSS/JavaScript, real static measurements and photographs |
-| `scripts/build_assets.py` | Rebuilds measured gallery and degradation outputs from explicitly approved image files using the original EyeQC feature and degradation code |
-| `scripts/check_pages.py` | Checks that every referenced map, image and result file is present |
-| `eyeqc/` | Original research feature extraction and degradation code |
-| `models/` | Supplied frozen model contracts and checksums |
-| `research/code/` | Original development, validation and reader-analysis scripts |
-| `research/data/` | Selected aggregate CSV outputs (not protected image-level records or large embedding caches) |
-| `eyeqc_flair/`, `eyeqc_vessel/` | Optional experimental modules, separate from the evaluated EyeQC hybrid model |
-| `portal/` | Optional FastAPI server providing Python feature extraction and research endpoints |
-| `.github/workflows/pages.yml` | GitHub Actions job to validate and publish `docs/` |
+### Results reported in the manuscript
 
-## Local preview
+| External or held-out cohort | Photographs | EyeQC AUROC |
+| --- | ---: | ---: |
+| EyeQ-test · held-out same-source | 16,249 | 0.984 |
+| DRIMDB | 194 | 1.000 |
+| FQS | 2,246 | 0.897 |
+| MSHF-CFP | 802 | 0.939 |
+| DeepDRiD | 1,600 | 0.780 |
+
+**21,091** evaluation photographs across five cohorts. Reader agreement ranged from weighted κ **0.702–0.777** in a separate 80-image study. Median CPU processing time in the original benchmark was **208 ms**. These figures are archived research findings, **not** performance measured by the website on a visitor's uploaded photograph.
+
+## Explore the website
+
+| Workspace | What happens | Where the output comes from |
+| --- | --- | --- |
+| **Quality workbench** | Choose a photograph; inspect its ten measurements, six-by-six tiles, map, overlay and downloadable record | Python EyeQC feature extractor applied to the included photographs |
+| **Vessel view** | Explore green-channel vessel contrast; optionally run RRWNet to see separate artery, vein and vessel probability maps | Contrast: OpenCV on the actual photograph. RRWNet: pretrained model via Python server |
+| **FLAIR comparison** | Run quality-description prompts and inspect per-prompt similarities | Separate FLAIR model via Python server; *not* calibrated EyeQC risk |
+| **Degradation laboratory** | Change defect type, severity or photograph; inspect the altered photograph, local measurements and dose-response curve | Original degradation and feature extraction functions, run on the supplied photographs |
+| **Spatial atlas** | Inspect four-panel retinal quality figures and controlled-defect examples | Rebuildable figures from `scripts/build_visual_atlas.py` |
+| **Evidence explorer** | Compare discrimination, calibration, readers and other cohorts | Aggregated values from the research analysis archive |
+
+![Controlled shadow, glare and local blur applied to retinal photographs and measured again](docs/assets/figures/eyeqc_degradation_atlas.webp)
+
+The atlas uses a fixed 0–1 display scale. The spatial measurements are **interpolated local-readable tiles**, not pixel-level expert annotations or attribution maps for the frozen DINOv2 encoder.
+
+## One interface, two deployment choices
+
+**GitHub Pages:** publish [`docs/`](docs/) directly. The gallery, measurable tile maps, nine-defect laboratory, charts, figures, downloads and browser-only photographic preview work without a server. Full Python computation for arbitrary uploaded photographs and pretrained FLAIR/RRWNet inference require a running API service.
+
+**Python-backed website:** deploy the included FastAPI server. It serves the *same website* at `/`, with `POST /api/check`, `/api/degradation`, `/api/dose-curve`, `/api/batch`, `/api/vessel`, and `/api/flair`. There is no separate visual interface to visit. The live model features run inside the existing website after it automatically connects to its own server.
 
 ```bash
-# Run from the repository root
-python -m http.server 8000 --directory docs
-# Visit http://localhost:8000/
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn portal.app:app --host 127.0.0.1 --port 7860
+# Open http://127.0.0.1:7860
 ```
 
-Or publish `docs/` through GitHub Pages. `file://` is not supported because modern browsers block JSON fetching from local files.
-
-## Rebuilding the real visuals
-
-Only use photographs with permission for public redistribution:
+To enable RRWNet and FLAIR, install optional dependencies and make their published weights accessible to the service. FLAIR's upstream package is installed separately; see [the module guidance](docs/DEPLOY.md). For a full dependency image, see `Dockerfile.full`. The server reports missing weights/dependencies instead of silently replacing the model with an invented result.
 
 ```bash
-pip install -r requirements.txt
-python scripts/build_assets.py --images /path/to/approved/retinal_photographs
+pip install -r requirements-optional.txt
+# Then install the retinal FLAIR package: `pip install git+https://github.com/jusiro/FLAIR.git`.
+```
+
+For Docker deployment, `docker build -t eyeqc .` and `docker run -p 7860:7860 eyeqc`. Optional large model weights must be made available at runtime and may require a machine with sufficient memory.
+
+## Reproduce the figures
+
+Only use photographs you have permission to redistribute. The figure generator uses the repository's measured gallery tile arrays, recorded code-generated dose examples and supplied retinal photographs:
+
+```bash
 python scripts/check_pages.py
+python scripts/build_visual_atlas.py
 ```
 
-**What the maps mean.** EyeQC's Python extractor measures retinal local readability on a six-by-six tile grid. The PNG heatmaps interpolate the tile values for display. They are *not* ground-truth segmentations, pixel-level clinical annotations, or DINOv2 attribution. Green indicates relatively better measured readability, red lower measured readability, using a fixed shared 0–1 scale.
+The generated figures are saved to `docs/assets/figures/`, with the auxiliary contrast overlays in `docs/assets/vessels/`. Rebuilding the main research gallery from source photographs uses `scripts/build_assets.py` and `eyeqc.core.extract_features`.
 
-**What the curves mean.** In the degradation laboratory, the features shown are rerun on the altered photograph. They are not predicted probabilities from the trained 778-feature model. For published monotonicity and localization statistics from the actual trained classifier, see the archived results and manuscript.
+## Code map
 
-## Research numbers at a glance
-
-The manuscript reports 21,091 evaluation photographs including 16,249 held-out EyeQ-test photographs and 4,842 from DRIMDB, FQS, MSHF-CFP and DeepDRiD. AUROCs were 0.984, 1.000, 0.897, 0.939 and 0.780, respectively. EyeQC–reader weighted κ ranged from 0.702 to 0.777 in an 80-image study. Median CPU end-to-end latency was 208 ms. These are **historical research evaluation results**, not metrics recalculated when viewing the website.
-
-DeepDRiD PASS negative predictive value was 64.0% under the fixed development thresholds. This is why the site does not autonomously recommend accepting or rejecting a clinical photograph.
-
-## Optional research services
-
-```bash
-pip install -r requirements.txt
-uvicorn portal.app:app --host 127.0.0.1 --port 8001
+```text
+EyeQC_release/
+├── docs/                 Research website; images, measured maps, dose frames and figures
+├── eyeqc/                Core extraction and controlled image degradation
+├── eyeqc_runtime/        Frozen trained-head contract; encoder parity gate
+├── eyeqc_vessel/         Optional RRWNet vessel inference
+├── eyeqc_flair/          Optional FLAIR image–text analysis
+├── portal/               Same-site FastAPI image and model endpoints
+├── models/               Supplied classifier contracts and checksums
+├── research/             Study analyses and aggregate data (no individual patient records)
+├── scripts/              Rebuild figures, prepare assets, check website
+├── tests/                Model-contract, image, server and release tests
+└── .github/workflows/    GitHub Pages publication and CI
 ```
 
-The FastAPI service computes the Python ten-feature extractor, local maps, batch analysis and controlled degradation for uploaded photographs. FLAIR and vessel outputs require their optional dependencies and model weights. **Published model equivalence is not yet established for the available candidate DINOv2 encoder.** Avoid enabling it for public clinical use.
+## Model verification and intended use
 
-## Publish
+The provided source code does **not** include the original exact `eyeqc_v2.backbone` preprocessing module needed to reproduce the published DINOv2 embeddings. Until that module and its weight revision are recovered and tested against archived embeddings, the online website **must not display invented calibrated EyeQC risk probabilities or clinical PASS/REVIEW/FAIL recommendations**. The frozen logistic model contract is retained for parity testing; the candidate encoder is disabled by default.
 
-See [the step-by-step GitHub Pages guide](docs/DEPLOY.md). This repository supports the simplest path, **Settings → Pages → Deploy from branch → `main` → `/docs`**, as well as GitHub Actions. Choose **one** Pages source, not both.
+The included vessel and FLAIR tools are **not part of the trained 778-feature EyeQC model** and have not been validated in the EyeQC manuscript. The project is intended for research demonstration and method development, not autonomous image acceptance or patient-care decisions.
 
-## Ethics, intended use and data rights
+Before publishing this repository, verify rights to share the supplied photographs, original dataset restrictions, third-party model licenses and the study's ethics/data availability statements. No patient images or uploaded file contents are saved by the API.
 
-Research use only. Do not use the website or candidate server to make a patient-care decision. The study used retrospective datasets with their respective terms. The included example photographs were provided for figure development; the person releasing the repository must verify that each photograph may be redistributed publicly. Remove or replace them if the source agreement does not allow public release. The website does not transmit uploaded images.
+## Citation
 
-## Availability and citation
-
-The manuscript is under preparation. Add final citation, ethics protocol, data availability DOI and repository version here when approved. No third-party dataset license is assumed for bundled photos or model weights.
+See [`CITATION.cff`](CITATION.cff). The manuscript is in preparation; add the final publication DOI, repository release tag and approved data citation after acceptance.
