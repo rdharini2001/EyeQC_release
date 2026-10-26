@@ -1,10 +1,6 @@
 <div align="center">
 
-# EyeQC
-
-### Retinal image quality, made visible.
-
-**A research framework for retinal photograph quality assessment, spatial measurements and controlled acquisition experiments.**
+# EyeQC: A research framework for retinal photograph quality assessment, spatial measurements and controlled acquisition experiments.**
 
 [Explore the research site](https://rdharini2001.github.io/EyeQC_release/) · [Read the Methods](research/MANUSCRIPT_ADDITIONS.md) · [Deployment guide](docs/DEPLOY.md) · [Model validation](MODEL_VALIDATION.md)
 
