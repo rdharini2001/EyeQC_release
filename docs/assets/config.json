@@ -1,1 +1,1 @@
-{"apiBase":"","notes":"Optional Python backend; when hosted with the backend on the same origin, connection is automatic."}
+{"apiBase":"","notes":"Hugging Face Docker Space serves Python and the website from the same origin; connection is automatic."}

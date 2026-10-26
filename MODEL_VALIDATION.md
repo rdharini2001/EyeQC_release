@@ -1,9 +1,11 @@
 # Model parity and safety gate
 
-The released Python feature extractor computes ten documented image-quality measurements and local six-by-six tile values.
+The available EyeQC research extractor calculates ten interpretable image-quality measurements and a six-by-six local-readability map from retinal photographs.
 
-The frozen hybrid classifier contract also needs the published frozen DINOv2 ViT-B/14 embedding. The uploaded source references `eyeqc_v2.backbone` but did not contain that exact preprocessing module; a guessed resize, crop, normalization, or token aggregation could change scores. Therefore the static Pages site does **not** calculate calibrated hybrid scores or PASS/REVIEW/FAIL categories from a newly uploaded image.
+The frozen 778-feature classifier additionally requires the **exact** published 768-dimensional DINOv2 ViT-B/14 embedding. The supplied original research source references `eyeqc_v2.backbone` but does not contain that module. Guessing resize, crop, normalization, token aggregation, or checkpoint version could alter the calibrated probability and PASS/REVIEW/FAIL output.
 
-Before enabling full inference, recover the exact original encoder, normalization/transforms, model weight revision/checksum and embedding extraction method. Compare held-out archived embeddings and predictions against newly computed values using fixed tolerances; confirm cohort-level and image-level parity. The optional server contains an explicitly experimental candidate encoder behind an opt-in flag, disabled by default. Do not call its outputs the validated model until parity has passed.
+**Consequently, the public Hugging Face tool computes the Python image measurements and real local maps but leaves the published calibrated EyeQC risk score disabled.** The repository contains an experimental candidate encoder behind an opt-in flag, disabled by default. Do not use it for clinical or manuscript-level results.
 
-FLAIR and vessel modules are optional additional analyses, not part of the manuscript's original validated classifier and not clinical recommendations.
+Before enabling published risk inference, recover the original preprocessing and weight checksum, regenerate embeddings for archived reference photographs, compare model probabilities to the original stored values, and confirm image-level and cohort-level parity within prespecified tolerances. Store this test and its expected reference vectors in the repository.
+
+FLAIR and RRWNet provide independent outputs and are not trained or calibrated components of the published EyeQC classifier. Each requires its own model dependencies and weights.

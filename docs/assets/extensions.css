@@ -5,3 +5,15 @@
 
 /* Keep the workbench focused on the published ten-feature extractor; additional models are shown in their own cards. */
 .api-actions #api-vessels,.api-actions #api-flair{display:none}
+
+
+/* The production Space has one Python backend and requires no connection form. */
+body.python-connected .api-connection,body.python-connected .ext-connect-form,body.python-connected .ext-connection>label{display:none!important}
+body.python-connected .ext-connection{padding:12px 20px}
+body.python-connected .ext-connection p.tiny-note{display:none}
+.live-lab{border:1px solid #29434b;background:#10212b;border-radius:18px;padding:24px;margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px;color:#e2f5ee}
+.live-lab h3{font-size:23px;margin:7px 0 8px}.live-lab p{color:#adc6c5;line-height:1.6;font-size:13px}.live-lab-actions{display:flex;flex-direction:column;align-self:center;gap:12px}.live-lab-actions input{accent-color:#73d5be;width:100%}.live-result{grid-column:1/-1;border-top:1px solid #27404b;padding-top:18px;min-height:60px}
+.live-result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.live-result-grid img{width:100%;height:240px;object-fit:contain;background:#061116;border-radius:12px}.live-result-grid p{margin-top:6px;text-align:center}
+.live-result svg{max-width:100%;height:auto;display:block}.live-measures{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}.live-measures div{padding:10px;background:#0a1b23;border-radius:9px}.live-measures b{display:block;color:#d5fff1;font-size:18px}
+.batch-tools{border-top:1px solid #29444b;padding:20px 0 0;margin-top:20px;display:grid;grid-template-columns:minmax(220px,1fr) minmax(320px,1fr);gap:14px;color:#d6eae7}.batch-tools p{color:#adc0c7;font-size:12px;line-height:1.6}.batch-tools>div:nth-child(2){display:flex;gap:7px;flex-wrap:wrap;align-items:center}.batch-tools input[type=file]{width:100%;max-width:300px;font-size:12px}.batch-tools #batch-status{grid-column:1/-1;font-size:12px;color:#acd1c9;overflow-wrap:anywhere}
+@media(max-width:820px){.live-lab,.batch-tools{grid-template-columns:1fr}.live-result-grid{grid-template-columns:1fr}.live-result-grid img{height:230px}.live-measures{grid-template-columns:repeat(2,1fr)}}

@@ -1,4 +1,4 @@
-"""Verify all GitHub Pages content uses real, shipped files."""
+"""Verify shipped website assets use real, code-derived image files."""
 from pathlib import Path
 import json,re,sys
 root=Path(__file__).resolve().parents[1]

@@ -1,25 +1,10 @@
-# EyeQC unified website release
+# Website and research release
 
-## What changed
+The EyeQC research repository and the live EyeQC tool have separate roles.
 
-The old public site showed the quality explorer but hid the vessel and FLAIR tools behind the optional API panel. The release makes these tools visible directly in the main research site, while retaining the same interface for static and Python hosting.
+- GitHub (`rdharini2001/EyeQC_release`) holds the quality extractor, experiment scripts, selected aggregate validation results, source photographs where redistributable, model contract, documentation and research figures.
+- Hugging Face (`Dharini24/EyeQC`) hosts the working research application on a Docker Space. The front end and Python API run together on one host; the optional RRWNet vessel model and FLAIR comparison do not redirect to other websites.
 
-The code now provides:
+See `HUGGINGFACE_DEPLOY.md` and run `python scripts/package_space.py --output ../EyeQC_hf_space` from the repository root to prepare a deployable Space.
 
-- Real retinal photograph workbench with ten interpretable measurements and 6×6 measured tile maps.
-- Code-generated vessel contrast gallery computed with OpenCV; the RRWNet inference button is separate and runs only with its upstream weights installed.
-- A dedicated FLAIR research panel returning model prompt similarities when the FLAIR package and weights are available.
-- Nine controlled acquisition defects, five doses, saved altered photographs and dose-response plots from the original research implementation.
-- Two new figure atlases rebuilt from the supplied retinal images and measurements.
-- Same-origin Python API serving the identical site; no redirection to the previous Hugging Face interface.
-- A fixed backend startup issue (`portal/static` was absent from the previous release) and corrected code links pointing to `EyeQC_release`.
-
-## Known limitations
-
-GitHub Pages cannot execute PyTorch models. Static sample views work without a server, while RRWNet, FLAIR and Python processing on newly uploaded images require the optional backend. The EyeQC hybrid classifier cannot be represented as validated inference until the original DINOv2 preprocessing contract is restored and checked against archived outputs. FLAIR and RRWNet are additional research modules, not the studied model.
-
-The display contours are visualization aids, not validated clinical operating thresholds. Example photographs must be cleared for public redistribution by the dataset rights holder.
-
-## To publish
-
-Download the full ZIP, extract its contents at repository root, review the image rights, and commit to `main`. Configure GitHub Pages to serve `main/docs` or use the supplied Actions workflow. The public site will then be `https://rdharini2001.github.io/EyeQC_release/`.
+Known limitation: the validated calibrated EyeQC risk head cannot be used on new photographs until the original DINOv2 embedding preprocessing is verified. The spatial maps shown today are code-computed tile readability measurements rather than a direct contribution map of the 778-feature classifier.

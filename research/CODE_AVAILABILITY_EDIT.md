@@ -1,5 +1,5 @@
-## Suggested manuscript code-availability update
+# Suggested code-availability statement
 
-Source code, model contracts, aggregate evaluation results, reproducible analysis scripts and an interactive research website are available at https://github.com/rdharini2001/EyeQC_release. The research website is available at https://rdharini2001.github.io/EyeQC_release/. The pretrained FLAIR and vessel models are optional independent research tools and are not included in the validated EyeQC classifier. Full reproduction of the published hybrid scores requires verification of the original DINOv2 preprocessing pipeline and pretrained weight revision.
+Source code, model contracts, aggregate evaluation results and analysis scripts are available at https://github.com/rdharini2001/EyeQC_release. The accompanying interactive research tool is hosted at https://huggingface.co/spaces/Dharini24/EyeQC. The optional FLAIR and RRWNet vessel modules are separate research utilities and were not evaluated as part of the reported EyeQC hybrid classifier. Full independent replication of the published hybrid predictions requires recovery and verification of the original DINOv2 preprocessing pipeline and its pretrained checkpoint revision.
 
-Before submission, replace provisional statements with the precise archived release tag and DOI once assigned, document image-data restrictions and third-party weight licenses, and check that the deployed repository corresponds to the version used to generate the reported results.
+Use this statement only after the GitHub and Hugging Face updates have been published and verified.
