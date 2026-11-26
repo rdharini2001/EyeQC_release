@@ -1,0 +1,20 @@
+[
+  {
+    "file": "deepdrid_1_l1.jpg",
+    "label": "A",
+    "image_id": "1_l1",
+    "paper_risk": 0.8232414256768726,
+    "paper_verdict": "FAIL",
+    "dataset_label": "inadequate",
+    "dataset_artifact_rating": 4
+  },
+  {
+    "file": "deepdrid_1_l2.jpg",
+    "label": "B",
+    "image_id": "1_l2",
+    "paper_risk": 0.010064585372410544,
+    "paper_verdict": "PASS",
+    "dataset_label": "inadequate",
+    "dataset_artifact_rating": 0
+  }
+]

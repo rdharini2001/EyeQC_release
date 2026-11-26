@@ -1,0 +1,11 @@
+metric,value
+latency_photographs,300.0
+latency_mean_ms,207.7769410000959
+latency_p50_ms,207.98030000878495
+latency_p90_ms,257.3914100008551
+latency_p95_ms,264.6273799764458
+latency_p99_ms,272.3787899687885
+latency_max_ms,285.9126999974251
+images_per_second_1_workers,5.331692579588726
+images_per_second_2_workers,10.006160693072518
+images_per_second_8_workers,25.169109041449527

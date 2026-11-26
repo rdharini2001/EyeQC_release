@@ -1,0 +1,26 @@
+[
+  {
+    "file": "deepdrid_348_r1.jpg",
+    "label": "Example \u00b7 PASS",
+    "image_id": "348_r1",
+    "paper_risk": 0.010068672379729117,
+    "paper_verdict": "PASS",
+    "dataset_label": "adequate"
+  },
+  {
+    "file": "deepdrid_71_r2.jpg",
+    "label": "Example \u00b7 REVIEW",
+    "image_id": "71_r2",
+    "paper_risk": 0.36809782629288307,
+    "paper_verdict": "REVIEW",
+    "dataset_label": "inadequate"
+  },
+  {
+    "file": "deepdrid_154_r2.jpg",
+    "label": "Example \u00b7 FAIL",
+    "image_id": "154_r2",
+    "paper_risk": 0.8549020664597425,
+    "paper_verdict": "FAIL",
+    "dataset_label": "inadequate"
+  }
+]

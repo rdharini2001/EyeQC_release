@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EyeQC</title>
+<style>
+  :root { --page: #0f151b; --panel: #1e262e; --line: #38434d; --text: #f2f6f7; --soft: #b9c6cd; --teal: #1f9e8b; --light: #65dbc1; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text); font: 16px/1.6 Inter, "Source Sans Pro", system-ui, sans-serif; }
+  main { max-width: 1180px; margin: auto; padding: 40px 18px 60px; }
+  header { text-align: center; }
+  h1 { margin: 0 0 6px; font-size: 52px; letter-spacing: -.02em; color: var(--light); }
+  h2 { font-size: 22px; margin: 34px 0 12px; }
+  p.lead { max-width: 760px; margin: 0 auto; color: var(--soft); }
+  .buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 22px 0 8px; }
+  .buttons a { text-decoration: none; font-weight: 700; padding: 11px 22px; border-radius: 10px; border: 1.5px solid var(--teal); color: var(--text); }
+  .buttons a.primary { background: var(--teal); }
+  figure { margin: 24px 0; background: #fff; border-radius: 18px; padding: 10px; }
+  figure img { display: block; width: 100%; height: auto; border-radius: 10px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .card b { display: block; font-size: 24px; } .card span { color: var(--soft); font-size: 14px; }
+  footer { margin-top: 40px; text-align: center; color: var(--soft); font-size: 13px; }
+  footer a { color: var(--light); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>EyeQC</h1>
+    <p class="lead">Concept-augmented retinal fundus image quality assessment: what is affected, where, and what to do next.</p>
+    <div class="buttons">
+      <a class="primary" href="https://huggingface.co/spaces/Dharini24/EyeQC_release">Try the interactive demo</a>
+      <a href="https://github.com/rdharini2001/EyeQC_release">Code and model</a>
+    </div>
+  </header>
+
+  <figure><img src="assets/overview.png" alt="Routine review compared with the EyeQC workflow"></figure>
+  <figure><img src="assets/interface_overview.png" alt="The EyeQC interface and its research applications"></figure>
+
+  <h2>Reported results</h2>
+  <div class="grid">
+    <div class="card"><b>21,091</b><span>photographs from five cohorts, one frozen model</span></div>
+    <div class="card"><b>0.780&ndash;1.000</b><span>AUROC; lowest under distribution shift (DeepDRiD)</span></div>
+    <div class="card"><b>0.70&ndash;0.78</b><span>weighted &kappa; with three ophthalmic graders on 80 photographs</span></div>
+    <div class="card"><b>208 ms</b><span>median CPU time per photograph</span></div>
+  </div>
+
+  <footer>
+    <p>Research use only. EyeQC is not a medical device. It assesses technical image quality, not disease.<br>
+    The reader study used UK Biobank data, which are restricted access and not distributed.<br>
+    <a href="https://github.com/rdharini2001/EyeQC_release#citation">Citation</a> &middot; MIT licence</p>
+  </footer>
+</main>
+</body>
+</html>

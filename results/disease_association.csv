@@ -1,0 +1,11 @@
+feature,display_name,eta_squared,p_value,batch_adjusted,n_images_used,n_dr_groups
+clipping,Clipping,0.0445874607091515,0.0019960079840319,True,1600,5
+illumination_uniformity,Illumination uniformity,0.0385272621516532,0.0019960079840319,True,1600,5
+color_balance,Color balance,0.0240299528014128,0.0019960079840319,True,1600,5
+exposure,Exposure,0.0129607281315682,0.0019960079840319,True,1600,5
+contrast,Contrast,0.0117731086469845,0.0039920159680638,True,1600,5
+detail_uniformity,Detail uniformity,0.0105492974274759,0.0039920159680638,True,1600,5
+artifact_burden,Artifact burden,0.0092438566023779,0.0099800399201596,True,1600,5
+focus,Focus,0.0069638872854342,0.0279441117764471,True,1600,5
+local_readability,Local readability,0.0066801900959261,0.029940119760479,True,1600,5
+field_coverage,Field coverage,0.0054568928181257,0.0978043912175648,True,1600,5

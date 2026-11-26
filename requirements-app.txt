@@ -1,0 +1,10 @@
+-r requirements.txt
+gradio==6.5.1
+plotly>=5.24,<7
+# optional third-party tools on the "Vessels & FLAIR" tab (not part of EyeQC)
+scikit-image>=0.22,<1
+huggingface-hub>=0.24,<2
+kornia>=0.7,<1
+safetensors>=0.4,<1
+transformers>=4.40,<5
+git+https://github.com/jusiro/FLAIR.git

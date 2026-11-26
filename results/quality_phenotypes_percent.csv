@@ -1,0 +1,11 @@
+,EyeQ-test,DRIMDB,FQS,MSHF-CFP,DeepDRiD
+focus,0.1,0.0,0.0,0.0,0.0
+detail_uniformity,37.5,9.2,18.9,46.7,69.9
+local_readability,28.8,30.3,60.9,16.4,15.0
+illumination_uniformity,5.7,0.0,1.6,15.6,1.9
+exposure,0.6,0.0,0.2,9.1,0.0
+contrast,5.9,1.3,0.8,0.4,1.6
+field_coverage,4.9,1.3,3.9,2.2,9.3
+artifact_burden,14.6,50.0,13.1,9.7,1.1
+clipping,1.7,0.0,0.0,0.0,0.0
+color_balance,0.3,7.9,0.6,0.0,1.1
