@@ -190,6 +190,7 @@ No datasets, photographs, per-image predictions or embeddings are redistributed.
 |---|---|
 | Embeddings and model fitting | `extract_embeddings.py`, `train_model.py` |
 | Cohort validation and ablation | `run_validation.py`, `run_ablation.py` |
+| Cohort intervals as reported, paired model differences | `run_paper_statistics.py` |
 | Reader agreement (restricted UK Biobank data) | `run_reader_agreement.py`, `run_reader_equivalence.py`, `run_reader_group_agreement.py` |
 | Degradation response and map localization | `run_degradation_response.py`, `run_compound_degradations.py`, `run_localization_maps.py` |
 | Local recalibration | `run_local_recalibration.py` |
