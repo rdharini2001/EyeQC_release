@@ -98,7 +98,7 @@ EyeQC's risk also identified each grader's FAIL calls (AUROC 0.952–0.971). For
 
 ### Photographs of the same eye (DeepDRiD, 798 pairs)
 
-The same decision was assigned to both photographs in 66.5% of pairs and opposite PASS and FAIL decisions in 30%. Where the reference ratings differed, the worse photograph received the higher risk in 84.0% (artifacts), 71.2% (clarity) and 78.0% (field definition) of pairs.
+The same decision was assigned to both photographs in 66.5% of pairs and opposite PASS and FAIL decisions in 29.9%. Where the reference ratings differed, the worse photograph received the higher risk in 84.0% (artifacts), 71.2% (clarity) and 78.0% (field definition) of pairs.
 
 ### Defect-specific maps
 
@@ -106,12 +106,14 @@ Glare, shadow and local blur were simulated on 400 gradable photographs (highest
 
 | Map | Glare | Shadow | Local blur |
 |---|---:|---:|---:|
-| **Exposure**, dense (pixel AUC) | **0.96** | **0.94** | 0.47 |
-| **Detail**, dense (pixel AUC) | **0.91** | **0.89** | **0.81** |
-| Combined, dense (pixel AUC) | 0.64 | 0.65 | 0.58 |
-| Contrast, dense (pixel AUC) | 0.51 | 0.53 | 0.52 |
-| Combined 6 × 6 tiles (lowest tile inside defect; chance 22%) | 96% | 95% | 40.5% |
-| Detail 6 × 6 tiles (same measure) | 98% | 98% | 88% |
+| **Exposure**, dense (pixel AUC) | **0.960** | **0.944** | 0.475 |
+| **Detail**, dense (pixel AUC) | **0.908** | **0.891** | **0.809** |
+| Combined, dense (pixel AUC) | 0.639 | 0.648 | 0.578 |
+| Contrast, dense (pixel AUC) | 0.514 | 0.527 | 0.515 |
+| Exposure 6 × 6 tiles (lowest tile inside defect; chance about 22%) | 80.5% | 81.5% | 18.2% |
+| Detail 6 × 6 tiles (same measure) | 97.9% | 98.4% | 88.2% |
+| Contrast 6 × 6 tiles | 49.7% | 50.0% | 21.1% |
+| Combined 6 × 6 tiles | 96.0% | 95.3% | 40.5% |
 
 At low severity most maps are close to chance. All three defects reduce image detail, so the detail map does not tell which defect is present.
 
@@ -191,10 +193,11 @@ No datasets, photographs, per-image predictions or embeddings are redistributed.
 | Embeddings and model fitting | `extract_embeddings.py`, `train_model.py` |
 | Cohort validation and ablation | `run_validation.py`, `run_ablation.py` |
 | Cohort intervals as reported, paired model differences | `run_paper_statistics.py` |
-| Reader agreement (restricted UK Biobank data) | `run_reader_agreement.py`, `run_reader_equivalence.py`, `run_reader_group_agreement.py` |
+| Reader agreement (restricted UK Biobank data) | `run_reader_intervals.py` (table as reported), `run_reader_agreement.py`, `run_reader_equivalence.py`, `run_reader_group_agreement.py` |
 | Degradation response and map localization | `run_degradation_response.py`, `run_compound_degradations.py`, `run_localization_maps.py` |
 | Local recalibration | `run_local_recalibration.py` |
 | Same-eye pairs | `run_same_eye_pairs.py` |
+| Correlation with independent quality ratings | `run_rating_correlations.py` |
 | Cohort variation and harmonization | `run_cohort_separability.py`, `run_harmonization_retention.py`, `run_disease_association.py` |
 | Concept probes, speed, sensitivity, input check | `run_concept_probes.py`, `run_throughput.py`, `run_label_definition_sensitivity.py`, `run_input_scope_check.py` |
 | Calibration diagrams, determinism | `checks/` |

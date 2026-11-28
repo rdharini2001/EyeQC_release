@@ -14,7 +14,7 @@ RESULTS = next((path for path in (HERE / "results", HERE.parent / "results") if 
 COHORTS = ["EyeQ-test", "DRIMDB", "FQS", "MSHF-CFP", "DeepDRiD"]
 READER_SUMMARY = {"eyeqc_kappa": "0.70–0.78", "grader_kappa": "0.77–0.80", "auroc": "0.95–0.97", "equivalence": "1 of 3"}   # as published
 METHODS = {"quickqual": "QuickQual", "retfound": "RETFound", "automorph": "AutoMorph", "efiqacp": "EFIQA-CP", "fthnet": "FTHNet",
-           "hyperiqa": "HyperIQA", "brisque": "BRISQUE (adapted)"}
+           "hyperiqa": "HyperIQA", "brisque": "BRISQUE (adapted)", "mcfnet": "MCF-Net (adapted)"}
 ABLATION = {"v3_hybrid": "EyeQC (measurements + DINOv2)", "v2_dinov2_only": "DINOv2 only", "v1_handcrafted_only": "Measurements only"}
 DEFECTS = {"glare": "Glare", "shadow": "Shadow", "local_blur": "Local blur"}
 

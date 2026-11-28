@@ -181,7 +181,7 @@ def build() -> gr.Blocks:
             # ------------------------------------------------ two photographs of one eye
             with gr.Tab("Compare"):
                 gr.HTML(ui.section("Two photographs of the same eye", "Which acquisition is better, and in which measurements do they differ? In the study, "
-                                   "separate photographs of one eye received the same decision in 66.5% of 798 pairs and opposite PASS and FAIL in 30%.", True))
+                                   "separate photographs of one eye received the same decision in 66.5% of 798 pairs and opposite PASS and FAIL in 29.9%.", True))
                 with gr.Row():
                     first = gr.Image(type="filepath", label="Photograph A", height=250, elem_classes="eq-upload")
                     second = gr.Image(type="filepath", label="Photograph B", height=250, elem_classes="eq-upload")
@@ -336,7 +336,7 @@ def build() -> gr.Blocks:
                             pair = (shown(auroc), shown(brier))
                         redraw_on_open(tab, *pair, shown(probes), shown(dashboard.comparisons()))
                         gr.Markdown("Comparison methods were evaluated with their available implementations and predictions; they differ in training data and "
-                                    "adaptation (see the paper's supplementary methods).")
+                                    "adaptation (see the paper's supplementary methods). MCF-Net did not cover every photograph in four cohorts.")
                     with gr.Tab("Distribution shift") as tab:
                         error, passed, pairs = dashboard.shift()
                         with gr.Row():
